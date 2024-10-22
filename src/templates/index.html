@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creditcard Data Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 60%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .form-section input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            width: 30%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        #result {
+            font-size: 24px;
+            color: #333;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload CreditCard Data for Prediction</h1>
+        <form id="upload-form" class="form-section">
+            <!-- Column 1 -->
+            <div>
+                <input type="number" id="v1" placeholder="V1" value="20584" required>
+                <input type="number" id="v2" placeholder="V2" value="264001" required>
+                <input type="number" id="v3" placeholder="V3" value="35100" required>
+                <input type="number" id="v4" placeholder="V4" value="271721" required>
+                <input type="number" id="v5" placeholder="V5" value="85658" required>
+                <input type="number" id="v6" placeholder="V6" value="13237" required>
+                <input type="number" id="v7" placeholder="V7" value="3728" required>
+                <input type="number" id="v8" placeholder="V8" value="268860" required>
+                <input type="number" id="v9" placeholder="V9" value="1054" required>
+                <input type="number" id="v10" placeholder="V10" value="1000" required>
+            </div>
+            <!-- Column 2 -->
+            <div>
+                <input type="number" id="v11" placeholder="V11" value="275218" required>
+                <input type="number" id="v12" placeholder="V12" value="3790" required>
+                <input type="number" id="v13" placeholder="V13" value="73978" required>
+                <input type="number" id="v14" placeholder="V14" value="705" required>
+                <input type="number" id="v15" placeholder="V15" value="180361" required>
+                <input type="number" id="v16" placeholder="V16" value="24726" required>
+                <input type="number" id="v17" placeholder="V17" value="415" required>
+                <input type="number" id="v18" placeholder="V18" value="135151" required>
+                <input type="number" id="v19" placeholder="V19" value="200928" required>
+                <input type="number" id="v20" placeholder="V20" value="203474" required>
+            </div>
+            <!-- Column 3 -->
+            <div>
+                <input type="number" id="v21" placeholder="V21" value="260512" required>
+                <input type="number" id="v22" placeholder="V22" value="130743" required>
+                <input type="number" id="v23" placeholder="V23" value="14493" required>
+                <input type="number" id="v24" placeholder="V24" value="184693" required>
+                <input type="number" id="v25" placeholder="V25" value="144156" required>
+                <input type="number" id="v26" placeholder="V26" value="194019" required>
+                <input type="number" id="v27" placeholder="V27" value="246471" required>
+                <input type="number" id="v28" placeholder="V28" value="30274" required>
+                <input type="number" id="amount" placeholder="Amount" value="0" required>
+                <input type="number" id="time" placeholder="Time" value="288" required>
+            </div>
+            <button type="submit">Submit Data</button>
+        </form>
+    </div>
+
+    <div class="result-container">
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const data = {
+                "V1": document.getElementById('v1').value,
+                "V2": document.getElementById('v2').value,
+                "V3": document.getElementById('v3').value,
+                "V4": document.getElementById('v4').value,
+                "V5": document.getElementById('v5').value,
+                "V6": document.getElementById('v6').value,
+                "V7": document.getElementById('v7').value,
+                "V8": document.getElementById('v8').value,
+                "V9": document.getElementById('v9').value,
+                "V10": document.getElementById('v10').value,
+                "V11": document.getElementById('v11').value,
+                "V12": document.getElementById('v12').value,
+                "V13": document.getElementById('v13').value,
+                "V14": document.getElementById('v14').value,
+                "V15": document.getElementById('v15').value,
+                "V16": document.getElementById('v16').value,
+                "V17": document.getElementById('v17').value,
+                "V18": document.getElementById('v18').value,
+                "V19": document.getElementById('v19').value,
+                "V20": document.getElementById('v20').value,
+                "V21": document.getElementById('v21').value,
+                "V22": document.getElementById('v22').value,
+                "V23": document.getElementById('v23').value,
+                "V24": document.getElementById('v24').value,
+                "V25": document.getElementById('v25').value,
+                "V26": document.getElementById('v26').value,
+                "V27": document.getElementById('v27').value,
+                "V28": document.getElementById('v28').value,
+                "Amount": document.getElementById('amount').value,
+                "Time": document.getElementById('time').value
+            };
+
+            try {
+                const response = await fetch('https://fraud-detection-model-latest.onrender.com/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                document.getElementById('result').innerText = `Prediction: ${result.prediction}`;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'An error occurred while processing your request.';
+            }
+        });
+    </script>
+</body>
+</html>

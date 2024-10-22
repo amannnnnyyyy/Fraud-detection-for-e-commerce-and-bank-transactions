@@ -1,0 +1,15 @@
+artifact_uri: file:///home/aman/Documents/10Academy/week8%269/notebooks/mlruns/0/0d6053f2105a4d13998bdbf5467e1126/artifacts
+end_time: 1729499684696
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0d6053f2105a4d13998bdbf5467e1126
+run_name: nebulous-smelt-834
+run_uuid: 0d6053f2105a4d13998bdbf5467e1126
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1729499684688
+status: 4
+tags: []
+user_id: aman
