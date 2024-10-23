@@ -45,3 +45,21 @@
 2024-10-22 16:22:56,960 - INFO - Features for prediction: [{'Time': 288, 'V1': 20584, 'V2': 264001, 'V3': 35100, 'V4': 271721, 'V5': 85658, 'V6': 13237, 'V7': 3728, 'V8': 268860, 'V9': 1054, 'V10': 1000, 'V11': 275218, 'V12': 3790, 'V13': 73978, 'V14': 705, 'V15': 180361, 'V16': 24726, 'V17': 415, 'V18': 135151, 'V19': 200928, 'V20': 203474, 'V21': 260512, 'V22': 130743, 'V23': 14493, 'V24': 184693, 'V25': 144156, 'V26': 194019, 'V27': 246471, 'V28': 30274, 'Amount': 0}]
 2024-10-22 16:22:56,969 - INFO - Prediction made: 1
 2024-10-22 16:22:56,969 - INFO - 127.0.0.1 - - [22/Oct/2024 16:22:56] "POST /predict HTTP/1.1" 200 -
+2024-10-22 16:49:02,709 - INFO - Logging is set up correctly.
+2024-10-22 16:49:04,202 - INFO - Starting Flask application.
+2024-10-22 16:49:04,206 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.230.113:5001
+2024-10-22 16:49:04,206 - INFO - [33mPress CTRL+C to quit[0m
+2024-10-22 16:49:24,074 - INFO - Home page accessed.
+2024-10-22 16:49:24,078 - INFO - 127.0.0.1 - - [22/Oct/2024 16:49:24] "GET / HTTP/1.1" 200 -
+2024-10-22 16:49:24,206 - INFO - 127.0.0.1 - - [22/Oct/2024 16:49:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-10-22 16:59:51,294 - INFO - Logging is set up correctly.
+2024-10-22 17:00:06,814 - INFO - Logging is set up correctly.
+2024-10-22 17:00:07,228 - INFO - Starting Flask application.
+2024-10-22 17:00:07,231 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.230.113:5001
+2024-10-22 17:00:07,231 - INFO - [33mPress CTRL+C to quit[0m
