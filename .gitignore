@@ -1,3 +1,16 @@
 docs/
 .venv/
 .env
+models/decision_tree_model+credit.pkl
+models/decision_tree_model+fraud.pkl
+
+models/gradient_boosting_model+fraud.pkl
+models/gradient_boosting_model+credit.pkl
+
+models/logistic_model+credit.pkl
+models/logistic_model+fraud.pkl
+
+models/mlp+credit.pkl
+models/mlp+fraud.pkl
+
+models/decision_tree_model.pkl
