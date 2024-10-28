@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creditcard Data Prediction</title>
+    <title>Fraud Prediction</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,11 +27,32 @@
             color: #333;
             text-align: center;
         }
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .nav button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 45%;
+        }
+        .nav button:hover {
+            background-color: #0056b3;
+        }
         .form-section {
-            display: grid;
+            display: none;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin-bottom: 20px;
+        }
+        .form-section.active {
+            display: grid;
         }
         .form-section input {
             padding: 8px;
@@ -39,7 +60,7 @@
             border: 1px solid #ccc;
             width: 100%;
         }
-        button {
+        button.submit-btn {
             padding: 10px;
             border: none;
             background-color: #007bff;
@@ -49,7 +70,7 @@
             cursor: pointer;
             width: 100%;
         }
-        button:hover {
+        button.submit-btn:hover {
             background-color: #0056b3;
         }
         .result-container {
@@ -67,116 +88,304 @@
             color: #333;
             text-align: left;
         }
+        .label-input {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .label-input label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Upload CreditCard Data for Prediction</h1>
-        <form id="upload-form" class="form-section">
+        <h1>Select Fraud Prediction Model</h1>
+        <div class="nav">
+            <button id="ecommerce-tab">E-commerce Fraud Prediction</button>
+            <button id="bank-tab">Bank Fraud Prediction</button>
+        </div>
+
+        <!-- Bank Form Section -->
+        <form id="bank-form" class="form-section">
             <!-- Column 1 -->
             <div>
-                <input type="number" id="v1" placeholder="V1" value="20584" required>
-                <input type="number" id="v2" placeholder="V2" value="264001" required>
-                <input type="number" id="v3" placeholder="V3" value="35100" required>
-                <input type="number" id="v4" placeholder="V4" value="271721" required>
-                <input type="number" id="v5" placeholder="V5" value="85658" required>
-                <input type="number" id="v6" placeholder="V6" value="13237" required>
-                <input type="number" id="v7" placeholder="V7" value="3728" required>
-                <input type="number" id="v8" placeholder="V8" value="268860" required>
-                <input type="number" id="v9" placeholder="V9" value="1054" required>
-                <input type="number" id="v10" placeholder="V10" value="1000" required>
+                <div class="label-input">
+                    <label for="v1">V1</label>
+                    <input type="number" id="v1" placeholder="V1" value="20584" required>
+                </div>
+                <div class="label-input">
+                    <label for="v2">V2</label>
+                    <input type="number" id="v2" placeholder="V2" value="264001" required>
+                </div>
+                <div class="label-input">
+                    <label for="v3">V3</label>
+                    <input type="number" id="v3" placeholder="V3" value="35100" required>
+                </div>
+                <div class="label-input">
+                    <label for="v4">V4</label>
+                    <input type="number" id="v4" placeholder="V4" value="271721" required>
+                </div>
+                <div class="label-input">
+                    <label for="v5">V5</label>
+                    <input type="number" id="v5" placeholder="V5" value="85658" required>
+                </div>
+                <div class="label-input">
+                    <label for="v6">V6</label>
+                    <input type="number" id="v6" placeholder="V6" value="13237" required>
+                </div>
+                <div class="label-input">
+                    <label for="v7">V7</label>
+                    <input type="number" id="v7" placeholder="V7" value="3728" required>
+                </div>
+                <div class="label-input">
+                    <label for="v8">V8</label>
+                    <input type="number" id="v8" placeholder="V8" value="268860" required>
+                </div>
+                <div class="label-input">
+                    <label for="v9">V9</label>
+                    <input type="number" id="v9" placeholder="V9" value="1054" required>
+                </div>
+                <div class="label-input">
+                    <label for="v10">V10</label>
+                    <input type="number" id="v10" placeholder="V10" value="1000" required>
+                </div>
             </div>
             <!-- Column 2 -->
             <div>
-                <input type="number" id="v11" placeholder="V11" value="275218" required>
-                <input type="number" id="v12" placeholder="V12" value="3790" required>
-                <input type="number" id="v13" placeholder="V13" value="73978" required>
-                <input type="number" id="v14" placeholder="V14" value="705" required>
-                <input type="number" id="v15" placeholder="V15" value="180361" required>
-                <input type="number" id="v16" placeholder="V16" value="24726" required>
-                <input type="number" id="v17" placeholder="V17" value="415" required>
-                <input type="number" id="v18" placeholder="V18" value="135151" required>
-                <input type="number" id="v19" placeholder="V19" value="200928" required>
-                <input type="number" id="v20" placeholder="V20" value="203474" required>
+                <div class="label-input">
+                    <label for="v11">V11</label>
+                    <input type="number" id="v11" placeholder="V11" value="275218" required>
+                </div>
+                <div class="label-input">
+                    <label for="v12">V12</label>
+                    <input type="number" id="v12" placeholder="V12" value="3790" required>
+                </div>
+                <div class="label-input">
+                    <label for="v13">V13</label>
+                    <input type="number" id="v13" placeholder="V13" value="73978" required>
+                </div>
+                <div class="label-input">
+                    <label for="v14">V14</label>
+                    <input type="number" id="v14" placeholder="V14" value="705" required>
+                </div>
+                <div class="label-input">
+                    <label for="v15">V15</label>
+                    <input type="number" id="v15" placeholder="V15" value="180361" required>
+                </div>
+                <div class="label-input">
+                    <label for="v16">V16</label>
+                    <input type="number" id="v16" placeholder="V16" value="24726" required>
+                </div>
+                <div class="label-input">
+                    <label for="v17">V17</label>
+                    <input type="number" id="v17" placeholder="V17" value="415" required>
+                </div>
+                <div class="label-input">
+                    <label for="v18">V18</label>
+                    <input type="number" id="v18" placeholder="V18" value="135151" required>
+                </div>
+                <div class="label-input">
+                    <label for="v19">V19</label>
+                    <input type="number" id="v19" placeholder="V19" value="200928" required>
+                </div>
+                <div class="label-input">
+                    <label for="v20">V20</label>
+                    <input type="number" id="v20" placeholder="V20" value="203474" required>
+                </div>
             </div>
             <!-- Column 3 -->
             <div>
-                <input type="number" id="v21" placeholder="V21" value="260512" required>
-                <input type="number" id="v22" placeholder="V22" value="130743" required>
-                <input type="number" id="v23" placeholder="V23" value="14493" required>
-                <input type="number" id="v24" placeholder="V24" value="184693" required>
-                <input type="number" id="v25" placeholder="V25" value="144156" required>
-                <input type="number" id="v26" placeholder="V26" value="194019" required>
-                <input type="number" id="v27" placeholder="V27" value="246471" required>
-                <input type="number" id="v28" placeholder="V28" value="30274" required>
-                <input type="number" id="amount" placeholder="Amount" value="0" required>
-                <input type="number" id="time" placeholder="Time" value="288" required>
+                <div class="label-input">
+                    <label for="v21">V21</label>
+                    <input type="number" id="v21" placeholder="V21" value="260512" required>
+                </div>
+                <div class="label-input">
+                    <label for="v22">V22</label>
+                    <input type="number" id="v22" placeholder="V22" value="130743" required>
+                </div>
+                <div class="label-input">
+                    <label for="v23">V23</label>
+                    <input type="number" id="v23" placeholder="V23" value="14493" required>
+                </div>
+                <div class="label-input">
+                    <label for="v24">V24</label>
+                    <input type="number" id="v24" placeholder="V24" value="184693" required>
+                </div>
+                <div class="label-input">
+                    <label for="v25">V25</label>
+                    <input type="number" id="v25" placeholder="V25" value="144156" required>
+                </div>
+                <div class="label-input">
+                    <label for="v26">V26</label>
+                    <input type="number" id="v26" placeholder="V26" value="194019" required>
+                </div>
+                <div class="label-input">
+                    <label for="v27">V27</label>
+                    <input type="number" id="v27" placeholder="V27" value="107289" required>
+                </div>
+                <div class="label-input">
+                    <label for="v28">V28</label>
+                    <input type="number" id="v28" placeholder="V28" value="269052" required>
+                </div>
+                <div class="label-input">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="Amount" value="100" required>
+                </div>
             </div>
-            <button type="submit">Submit Data</button>
+            <button type="button" class="submit-btn" id="submit-bank">Predict</button>
+        </form>
+
+        <!-- E-commerce Form Section -->
+        <form id="ecommerce-form" class="form-section">
+            <div class="label-input">
+                <label for="ip">IP Address</label>
+                <input type="text" id="ip" placeholder="Enter IP Address" required>
+            </div>
+            <div class="label-input">
+                <label for="transaction_amount">Transaction Amt</label>
+                <input type="number" id="transaction_amount" placeholder="Enter Transaction Amount" required>
+            </div>
+            <div class="label-input">
+                <label for="user_id">User ID</label>
+                <input type="text" id="user_id" placeholder="Enter User ID" required>
+            </div>
+            <div class="label-input">
+                <label for="product_id">Product ID</label>
+                <input type="text" id="product_id" placeholder="Enter Product ID" required>
+            </div>
+            <button type="button" class="submit-btn" id="submit-ecommerce">Predict</button>
         </form>
     </div>
 
     <div class="result-container">
-        <div id="result"></div>
+        <p id="result"></p>
     </div>
 
     <script>
-        document.getElementById('upload-form').addEventListener('submit', async function (event) {
-            event.preventDefault();
-
+        document.getElementById("ecommerce-tab").addEventListener("click", function() {
+            document.getElementById("ecommerce-form").classList.add("active");
+            document.getElementById("bank-form").classList.remove("active");
+            document.getElementById("result-container").style.display = "none";
+        });
+    
+        document.getElementById("bank-tab").addEventListener("click", function() {
+            document.getElementById("bank-form").classList.add("active");
+            document.getElementById("ecommerce-form").classList.remove("active");
+            document.getElementById("result-container").style.display = "none";
+        });
+    
+        document.getElementById("ecommerce-submit")?.addEventListener("click", function() {
             const data = {
-                "V1": document.getElementById('v1').value,
-                "V2": document.getElementById('v2').value,
-                "V3": document.getElementById('v3').value,
-                "V4": document.getElementById('v4').value,
-                "V5": document.getElementById('v5').value,
-                "V6": document.getElementById('v6').value,
-                "V7": document.getElementById('v7').value,
-                "V8": document.getElementById('v8').value,
-                "V9": document.getElementById('v9').value,
-                "V10": document.getElementById('v10').value,
-                "V11": document.getElementById('v11').value,
-                "V12": document.getElementById('v12').value,
-                "V13": document.getElementById('v13').value,
-                "V14": document.getElementById('v14').value,
-                "V15": document.getElementById('v15').value,
-                "V16": document.getElementById('v16').value,
-                "V17": document.getElementById('v17').value,
-                "V18": document.getElementById('v18').value,
-                "V19": document.getElementById('v19').value,
-                "V20": document.getElementById('v20').value,
-                "V21": document.getElementById('v21').value,
-                "V22": document.getElementById('v22').value,
-                "V23": document.getElementById('v23').value,
-                "V24": document.getElementById('v24').value,
-                "V25": document.getElementById('v25').value,
-                "V26": document.getElementById('v26').value,
-                "V27": document.getElementById('v27').value,
-                "V28": document.getElementById('v28').value,
-                "Amount": document.getElementById('amount').value,
-                "Time": document.getElementById('time').value
+                V1: document.getElementById("v1-ecommerce").value,
+                V2: document.getElementById("v2-ecommerce").value,
+                V3: document.getElementById("v3-ecommerce").value,
+                V4: document.getElementById("v4-ecommerce").value,
+                V5: document.getElementById("v5-ecommerce").value,
+                V6: document.getElementById("v6-ecommerce").value,
+                V7: document.getElementById("v7-ecommerce").value,
+                V8: document.getElementById("v8-ecommerce").value,
+                V9: document.getElementById("v9-ecommerce").value,
+                V10: document.getElementById("v10-ecommerce").value,
+                V11: document.getElementById("v11-ecommerce").value,
+                V12: document.getElementById("v12-ecommerce").value,
+                V13: document.getElementById("v13-ecommerce").value,
+                V14: document.getElementById("v14-ecommerce").value,
+                V15: document.getElementById("v15-ecommerce").value,
+                V16: document.getElementById("v16-ecommerce").value,
+                V17: document.getElementById("v17-ecommerce").value,
+                V18: document.getElementById("v18-ecommerce").value,
+                V19: document.getElementById("v19-ecommerce").value,
+                V20: document.getElementById("v20-ecommerce").value,
+                V21: document.getElementById("v21-ecommerce").value,
+                V22: document.getElementById("v22-ecommerce").value,
+                V23: document.getElementById("v23-ecommerce").value,
+                V24: document.getElementById("v24-ecommerce").value,
+                V25: document.getElementById("v25-ecommerce").value,
+                V26: document.getElementById("v26-ecommerce").value,
+                V27: document.getElementById("v27-ecommerce").value,
+                V28: document.getElementById("v28-ecommerce").value,
+                Amount: document.getElementById("amount-ecommerce").value
             };
-
-            try {
-                const response = await fetch('https://fraud-detection-model-latest/predict', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+    
+            fetch('/ecommerce_predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.prediction !== undefined) {
+                    document.getElementById("result").innerText = `E-commerce Prediction: ${data.prediction}`;
+                } else {
+                    document.getElementById("result").innerText = 'Error: ' + data.error;
                 }
-
-                const result = await response.json();
-                document.getElementById('result').innerText = `Prediction: ${result.prediction}`;
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('result').innerText = 'An error occurred while processing your request.';
-            }
+                document.getElementById("result-container").style.display = "block";
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = 'Error: ' + error;
+                document.getElementById("result-container").style.display = "block";
+            });
+        });
+    
+        document.getElementById("bank-submit")?.addEventListener("click", function() {
+            const data = {
+                V1: document.getElementById("v1").value,
+                V2: document.getElementById("v2").value,
+                V3: document.getElementById("v3").value,
+                V4: document.getElementById("v4").value,
+                V5: document.getElementById("v5").value,
+                V6: document.getElementById("v6").value,
+                V7: document.getElementById("v7").value,
+                V8: document.getElementById("v8").value,
+                V9: document.getElementById("v9").value,
+                V10: document.getElementById("v10").value,
+                V11: document.getElementById("v11").value,
+                V12: document.getElementById("v12").value,
+                V13: document.getElementById("v13").value,
+                V14: document.getElementById("v14").value,
+                V15: document.getElementById("v15").value,
+                V16: document.getElementById("v16").value,
+                V17: document.getElementById("v17").value,
+                V18: document.getElementById("v18").value,
+                V19: document.getElementById("v19").value,
+                V20: document.getElementById("v20").value,
+                V21: document.getElementById("v21").value,
+                V22: document.getElementById("v22").value,
+                V23: document.getElementById("v23").value,
+                V24: document.getElementById("v24").value,
+                V25: document.getElementById("v25").value,
+                V26: document.getElementById("v26").value,
+                V27: document.getElementById("v27").value,
+                V28: document.getElementById("v28").value,
+                Amount: document.getElementById("amount").value
+            };
+    
+            fetch('/bank_predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.prediction !== undefined) {
+                    document.getElementById("result").innerText = `Bank Prediction: ${data.prediction}`;
+                } else {
+                    document.getElementById("result").innerText = 'Error: ' + data.error;
+                }
+                document.getElementById("result-container").style.display = "block";
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = 'Error: ' + error;
+                document.getElementById("result-container").style.display = "block";
+            });
         });
     </script>
+    
 </body>
 </html>

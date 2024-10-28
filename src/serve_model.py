@@ -16,77 +16,37 @@ logging.basicConfig(filename='app.log', level=logging.INFO,
 
 app.logger.info("Logging is set up correctly.")
 
-# Load the trained model
-model = joblib.load('random_forest_model.pkl')
+# Load both models
+ecommerce_model = joblib.load('random_forest_model+fraud.pkl')
+bank_model = joblib.load('random_forest_model+credit.pkl')
 
-@app.route('/')
-def index():
-    app.logger.info("Home page accessed.")
-    return render_template('index.html')
-
-@app.route('/test_logging')
-def test_logging():
-    app.logger.info("Test logging route accessed.")
-    return "Check the log for this message!"
-
-def make_prediction(data):
-    features = [
-        data["Time"],
-        data["V1"],
-        data["V2"],
-        data["V3"],
-        data["V4"],
-        data["V5"],
-        data["V6"],
-        data["V7"],
-        data["V8"],
-        data["V9"],
-        data["V10"],
-        data["V11"],
-        data["V12"],
-        data["V13"],
-        data["V14"],
-        data["V15"],
-        data["V16"],
-        data["V17"],
-        data["V18"],
-        data["V19"],
-        data["V20"],
-        data["V21"],
-        data["V22"],
-        data["V23"],
-        data["V24"],
-        data["V25"],
-        data["V26"],
-        data["V27"],
-        data["V28"],
-        data["Amount"]
-    ]
-
-    features_df = pd.DataFrame([features], columns=[
-         "Time", "V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9",
-        "V10", "V11", "V12", "V13", "V14", "V15", "V16",
-        "V17", "V18", "V19", "V20", "V21", "V22", "V23",
-        "V24", "V25", "V26", "V27", "V28", "Amount"
-    ])
-
-    app.logger.info("Features for prediction: %s", features_df.to_dict(orient='records'))
+def make_prediction(model, data):
+    features = [data[key] for key in sorted(data.keys())]  # Assuming data keys match the model input order
+    features_df = pd.DataFrame([features])
     prediction = model.predict(features_df)
     return int(prediction[0])
 
-@app.route('/predict', methods=['POST'])
-def predict():
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/ecommerce_predict', methods=['POST'])
+def ecommerce_predict():
     data = request.get_json()
-    app.logger.info("Received data: %s", data)
-    
     try:
-        prediction = make_prediction(data)
-        app.logger.info("Prediction made: %d", prediction)
+        prediction = make_prediction(ecommerce_model, data)
         return jsonify({'prediction': prediction})
     except Exception as e:
-        app.logger.error("Error during prediction: %s", str(e))
-        return jsonify({'error': 'An error occurred during prediction.'}), 500
+        return jsonify({'error': 'E-commerce prediction error.'}), 500
+
+@app.route('/bank_predict', methods=['POST'])
+def bank_predict():
+    data = request.get_json()
+    try:
+        prediction = make_prediction(bank_model, data)
+        return jsonify({'prediction': prediction})
+    except Exception as e:
+        return jsonify({'error': 'Bank prediction error.'}), 500
 
 if __name__ == '__main__':
-    app.logger.info("Starting Flask application.")
     app.run(host='0.0.0.0', port=5001)
