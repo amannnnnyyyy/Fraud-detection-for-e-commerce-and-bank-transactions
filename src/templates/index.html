@@ -10,7 +10,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 20px;
+            /* padding: 10px; */
             background-color: #f0f0f0;
         }
         .container {
@@ -47,42 +47,48 @@
         }
         .form-section {
             display: none;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(4, 2fr);
+            gap: 1px;
             margin-bottom: 20px;
         }
         .form-section.active {
             display: grid;
         }
         .form-section input {
-            padding: 8px;
+            padding: 5px;
+            font-size: 14px;
             border-radius: 5px;
-            border: 1px solid #ccc;
+          border: 1px solid #ccc;
             width: 100%;
         }
         button.submit-btn {
-            padding: 10px;
+            padding: 8px;
             border: none;
-            background-color: #007bff;
+          background-color: #007bff;
             color: white;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
+            width: 80%;
+            height:100%
         }
         button.submit-btn:hover {
             background-color: #0056b3;
         }
         .result-container {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
-            padding: 20px;
-            width: 30%;
+            padding: 8px;
+            width: 10%;
+            height: 50vh;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-        }
+            position: fixed; /* Positions the container relative to the viewport */
+            top: 0;
+            right: 0; /* Aligns container to the right side */
+}
         #result {
             font-size: 24px;
             color: #333;
@@ -94,8 +100,9 @@
             margin-bottom: 10px;
         }
         .label-input label {
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 3px;
+            font-weight: medium;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -111,6 +118,10 @@
         <form id="bank-form" class="form-section">
             <!-- Column 1 -->
             <div>
+                <div class="label-input">
+                    <label for="Time">Time</label>
+                    <input type="number" id="Time" placeholder="Time" value="20584" required>
+                </div>
                 <div class="label-input">
                     <label for="v1">V1</label>
                     <input type="number" id="v1" placeholder="V1" value="20584" required>
@@ -236,29 +247,66 @@
             </div>
             <button type="button" class="submit-btn" id="submit-bank">Predict</button>
         </form>
-
+    
         <!-- E-commerce Form Section -->
         <form id="ecommerce-form" class="form-section">
             <div class="label-input">
-                <label for="ip">IP Address</label>
-                <input type="text" id="ip" placeholder="Enter IP Address" required>
+                <label for="purchase_value">Purchase Value</label>
+                <input type="number" id="purchase_value" value="54" placeholder="Enter Purchase Value" required>
             </div>
             <div class="label-input">
-                <label for="transaction_amount">Transaction Amt</label>
-                <input type="number" id="transaction_amount" placeholder="Enter Transaction Amount" required>
+                <label for="sex">Sex</label>
+                <select id="sex" required>
+                    <option value="1" disabled selected>Select Sex</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                    <option value="0">Other</option>
+                </select>
             </div>
             <div class="label-input">
-                <label for="user_id">User ID</label>
-                <input type="text" id="user_id" placeholder="Enter User ID" required>
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Enter Age" value="25" required>
             </div>
             <div class="label-input">
-                <label for="product_id">Product ID</label>
-                <input type="text" id="product_id" placeholder="Enter Product ID" required>
+                <label for="ip_address">IP Address</label>
+                <input type="text" id="ip_address" placeholder="Enter IP Address" value="880217484" required>
+            </div>
+            <div class="label-input">
+                <label for="transaction_frequency">Transaction Frequency</label>
+                <input type="number" id="transaction_frequency" placeholder="Enter Transaction Frequency" value="1" required>
+            </div>
+            <div class="label-input">
+                <label for="transaction_velocity">Transaction Velocity</label>
+                <input type="number" id="transaction_velocity" placeholder="Enter Transaction Velocity" value ="0.0" required>
+            </div>
+            <div class="label-input">
+                <label for="hour_of_day">Hour of Day</label>
+                <input type="number" id="hour_of_day" placeholder="Enter Hour of Day (0-23)" min="0" max="23" value="10" required>
+            </div>
+            <div class="label-input">
+                <label for="day_of_week">Day of Week</label>
+                <input type="number" id="day_of_week" placeholder="Enter Day of Week (0-6)" min="0" max="6" value="5" required>
+            </div>
+            <div class="label-input">
+                <label for="hour_sin">Hour Sin</label>
+                <input type="number" id="hour_sin" placeholder="Enter Hour Sin" value="0.3984010898462414" step="0.01" required>
+            </div>
+            <div class="label-input">
+                <label for="hour_cos">Hour Cos</label>
+                <input type="number" id="hour_cos" placeholder="Enter Hour Cos" value="-0.917211301505453" step="0.01" required>
+            </div>
+            <div class="label-input">
+                <label for="day_sin">Day Sin</label>
+                <input type="number" id="day_sin" placeholder="Enter Day Sin" value="-0.8660254037844386" step="0.01" required>
+            </div>
+            <div class="label-input">
+                <label for="day_cos">Day Cos</label>
+                <input type="number" id="day_cos" placeholder="Enter Day Cos" value="0.5000000000000001" step="0.01" required>
             </div>
             <button type="button" class="submit-btn" id="submit-ecommerce">Predict</button>
         </form>
     </div>
-
+    
     <div class="result-container">
         <p id="result"></p>
     </div>
@@ -267,7 +315,9 @@
         document.getElementById("ecommerce-tab").addEventListener("click", function() {
             document.getElementById("ecommerce-form").classList.add("active");
             document.getElementById("bank-form").classList.remove("active");
-            document.getElementById("result-container").style.display = "none";
+            if (document.getElementById("result-container")) {
+                document.getElementById("result-container").style.display = "none";
+            }
         });
     
         document.getElementById("bank-tab").addEventListener("click", function() {
@@ -276,40 +326,23 @@
             document.getElementById("result-container").style.display = "none";
         });
     
-        document.getElementById("ecommerce-submit")?.addEventListener("click", function() {
+        document.getElementById("submit-ecommerce").addEventListener("click", function() {
             const data = {
-                V1: document.getElementById("v1-ecommerce").value,
-                V2: document.getElementById("v2-ecommerce").value,
-                V3: document.getElementById("v3-ecommerce").value,
-                V4: document.getElementById("v4-ecommerce").value,
-                V5: document.getElementById("v5-ecommerce").value,
-                V6: document.getElementById("v6-ecommerce").value,
-                V7: document.getElementById("v7-ecommerce").value,
-                V8: document.getElementById("v8-ecommerce").value,
-                V9: document.getElementById("v9-ecommerce").value,
-                V10: document.getElementById("v10-ecommerce").value,
-                V11: document.getElementById("v11-ecommerce").value,
-                V12: document.getElementById("v12-ecommerce").value,
-                V13: document.getElementById("v13-ecommerce").value,
-                V14: document.getElementById("v14-ecommerce").value,
-                V15: document.getElementById("v15-ecommerce").value,
-                V16: document.getElementById("v16-ecommerce").value,
-                V17: document.getElementById("v17-ecommerce").value,
-                V18: document.getElementById("v18-ecommerce").value,
-                V19: document.getElementById("v19-ecommerce").value,
-                V20: document.getElementById("v20-ecommerce").value,
-                V21: document.getElementById("v21-ecommerce").value,
-                V22: document.getElementById("v22-ecommerce").value,
-                V23: document.getElementById("v23-ecommerce").value,
-                V24: document.getElementById("v24-ecommerce").value,
-                V25: document.getElementById("v25-ecommerce").value,
-                V26: document.getElementById("v26-ecommerce").value,
-                V27: document.getElementById("v27-ecommerce").value,
-                V28: document.getElementById("v28-ecommerce").value,
-                Amount: document.getElementById("amount-ecommerce").value
+                purchase_value: document.getElementById("purchase_value").value,
+                sex: document.getElementById("sex").value,
+                age: document.getElementById("age").value,
+                ip_address: document.getElementById("ip_address").value,
+                transaction_frequency: document.getElementById("transaction_frequency").value,
+                transaction_velocity: document.getElementById("transaction_velocity").value,
+                hour_of_day: document.getElementById("hour_of_day").value,
+                day_of_week: document.getElementById("day_of_week").value,
+                hour_sin: document.getElementById("hour_sin").value,
+                hour_cos: document.getElementById("hour_cos").value,
+                day_sin: document.getElementById("day_sin").value,
+                day_cos: document.getElementById("day_cos").value
             };
     
-            fetch('/ecommerce_predict', {
+            fetch(`${window.location.origin}/ecommerce_predict`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -323,68 +356,74 @@
                 } else {
                     document.getElementById("result").innerText = 'Error: ' + data.error;
                 }
-                document.getElementById("result-container").style.display = "block";
-            })
-            .catch(error => {
-                document.getElementById("result").innerText = 'Error: ' + error;
-                document.getElementById("result-container").style.display = "block";
-            });
-        });
-    
-        document.getElementById("bank-submit")?.addEventListener("click", function() {
-            const data = {
-                V1: document.getElementById("v1").value,
-                V2: document.getElementById("v2").value,
-                V3: document.getElementById("v3").value,
-                V4: document.getElementById("v4").value,
-                V5: document.getElementById("v5").value,
-                V6: document.getElementById("v6").value,
-                V7: document.getElementById("v7").value,
-                V8: document.getElementById("v8").value,
-                V9: document.getElementById("v9").value,
-                V10: document.getElementById("v10").value,
-                V11: document.getElementById("v11").value,
-                V12: document.getElementById("v12").value,
-                V13: document.getElementById("v13").value,
-                V14: document.getElementById("v14").value,
-                V15: document.getElementById("v15").value,
-                V16: document.getElementById("v16").value,
-                V17: document.getElementById("v17").value,
-                V18: document.getElementById("v18").value,
-                V19: document.getElementById("v19").value,
-                V20: document.getElementById("v20").value,
-                V21: document.getElementById("v21").value,
-                V22: document.getElementById("v22").value,
-                V23: document.getElementById("v23").value,
-                V24: document.getElementById("v24").value,
-                V25: document.getElementById("v25").value,
-                V26: document.getElementById("v26").value,
-                V27: document.getElementById("v27").value,
-                V28: document.getElementById("v28").value,
-                Amount: document.getElementById("amount").value
-            };
-    
-            fetch('/bank_predict', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.prediction !== undefined) {
-                    document.getElementById("result").innerText = `Bank Prediction: ${data.prediction}`;
-                } else {
-                    document.getElementById("result").innerText = 'Error: ' + data.error;
+                if (document.getElementById("result-container")) {
+                    document.getElementById("result-container").style.display = "block";
                 }
-                document.getElementById("result-container").style.display = "block";
             })
             .catch(error => {
-                document.getElementById("result").innerText = 'Error: ' + error;
-                document.getElementById("result-container").style.display = "block";
+                console.error("Prediction failed:", error);
+                document.getElementById("result").innerText = `Error: ${error.message}`;
+                if (document.getElementById("result-container")) {
+                    document.getElementById("result-container").style.display = "block";
+                }
             });
         });
+
+
+        document.getElementById("submit-bank").addEventListener("click", function() {
+    const data = {
+        Time: document.getElementById("Time").value,
+        V1: document.getElementById("v1").value,
+        V2: document.getElementById("v2").value,
+        V3: document.getElementById("v3").value,
+        V4: document.getElementById("v4").value,
+        V5: document.getElementById("v5").value,
+        V6: document.getElementById("v6").value,
+        V7: document.getElementById("v7").value,
+        V8: document.getElementById("v8").value,
+        V9: document.getElementById("v9").value,
+        V10: document.getElementById("v10").value,
+        V11: document.getElementById("v11").value,
+        V12: document.getElementById("v12").value,
+        V13: document.getElementById("v13").value,
+        V14: document.getElementById("v14").value,
+        V15: document.getElementById("v15").value,
+        V16: document.getElementById("v16").value,
+        V17: document.getElementById("v17").value,
+        V18: document.getElementById("v18").value,
+        V19: document.getElementById("v19").value,
+        V20: document.getElementById("v20").value,
+        V21: document.getElementById("v21").value,
+        V22: document.getElementById("v22").value,
+        V23: document.getElementById("v23").value,
+        V24: document.getElementById("v24").value,
+        V25: document.getElementById("v25").value,
+        V26: document.getElementById("v26").value,
+        V27: document.getElementById("v27").value,
+        V28: document.getElementById("v28").value,
+        Amount: document.getElementById("amount").value
+    };
+
+    fetch(`${window.location.origin}/bank_predict`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.prediction !== undefined) {
+                document.getElementById("result").innerText = `Bank Prediction: ${data.prediction}`;
+            } else {
+                document.getElementById("result").innerText = 'Error: ' + data.error;
+            }
+        })
+        .catch(error => {
+            console.error("Prediction failed:", error);
+            document.getElementById("result").innerText = `Error: ${error.message}`;
+        });
+    });
     </script>
     
 </body>

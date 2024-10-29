@@ -1,52 +1,51 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import joblib
 import pandas as pd
-import logging
+import joblib
 
-# Initialize Flask app
 app = Flask(__name__)
+CORS(app)  # Allow all origins
 
-# Enable CORS for all routes
-CORS(app)
-
-# Set up basic logging configuration
-logging.basicConfig(filename='app.log', level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
-app.logger.info("Logging is set up correctly.")
-
-# Load both models
-ecommerce_model = joblib.load('random_forest_model+fraud.pkl')
+# Load your models
 bank_model = joblib.load('random_forest_model+credit.pkl')
+ecommerce_model = joblib.load('random_forest_model+fraud.pkl')
 
-def make_prediction(model, data):
-    features = [data[key] for key in sorted(data.keys())]  # Assuming data keys match the model input order
-    features_df = pd.DataFrame([features])
-    prediction = model.predict(features_df)
-    return int(prediction[0])
-
+# Route to serve the HTML template
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
-
-@app.route('/ecommerce_predict', methods=['POST'])
-def ecommerce_predict():
-    data = request.get_json()
-    try:
-        prediction = make_prediction(ecommerce_model, data)
-        return jsonify({'prediction': prediction})
-    except Exception as e:
-        return jsonify({'error': 'E-commerce prediction error.'}), 500
 
 @app.route('/bank_predict', methods=['POST'])
 def bank_predict():
-    data = request.get_json()
     try:
-        prediction = make_prediction(bank_model, data)
-        return jsonify({'prediction': prediction})
+        # Get JSON data from the request
+        data = request.json
+        
+        # Convert JSON to DataFrame
+        df = pd.DataFrame([data])
+        
+        # Make predictions
+        prediction = bank_model.predict(df)
+        
+        return jsonify({'prediction': int(prediction[0])})
     except Exception as e:
-        return jsonify({'error': 'Bank prediction error.'}), 500
+        return jsonify({'error': str(e)})
+
+@app.route('/ecommerce_predict', methods=['POST'])
+def ecommerce_predict():
+    try:
+        # Get JSON data from the request
+        data = request.json
+        
+        # Convert JSON to DataFrame
+        df = pd.DataFrame([data])
+        
+        # Make predictions
+        prediction = ecommerce_model.predict(df)
+        
+        return jsonify({'prediction': int(prediction[0])})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=8000)
